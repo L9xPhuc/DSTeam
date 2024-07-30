@@ -4,6 +4,7 @@ body {
     color: #333;
     margin: 0;
     padding: 0;
+    background-size: 100%;
     background-image: url('nendis.jpg');
     background-position: center;
     background-attachment: fixed;
@@ -13,7 +14,7 @@ body::-webkit-scrollbar{
     display: none;
 }
 
-body p{
+.special-toggle p{
     color: white;
 }
 
@@ -208,6 +209,7 @@ input:checked + .slider:before {
 .popup-image {
     max-width: 100%; /* Đảm bảo hình ảnh không vượt quá kích thước của popup */
     height: auto;
+    border-radius: 10px;
 }
 
 .close {
