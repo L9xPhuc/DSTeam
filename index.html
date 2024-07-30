@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Crack List</title>
+    <link rel="icon" type="image/x-icon" href="LOGODSNEW2.ico">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">
+        <!-- <img src="LOGODSNEW2.png" alt="Left Logo" class="logo left-logo"> -->
+        <!-- <h1>Game Crack List</h1> -->
+        <!-- <img src="LOGODSNEW2.png" alt="Right Logo" class="logo right-logo"> -->
+    </div>
+    <div class="search-container">
+        <input type="text" id="search-box" placeholder="Tìm kiếm game...">
+        <button id="search-button">Tìm kiếm</button>
+    </div>
+    <div class="special-toggle">
+        <label class="switch">
+            <input type="checkbox" id="toggle-special">
+            <span class="slider round"></span>
+        </label>
+        <p>Việt Hóa</p>
+    </div>
+    <div id="game-list"></div>
+
+<!-- Popup -->
+<div id="popup" class="popup" onclick="closePopup(event)">
+    <div class="popup-content" onclick="event.stopPropagation()">
+        <span id="close-popup" class="close">&times;</span>
+        <h2 id="popup-title"></h2>
+        <img src="" alt="Game Image" id="popup-image" class="popup-image"/>
+        <p><strong>Cấu hình tối thiểu:</strong><br> <span id="popup-minRequirements"></span></p>
+        <p><strong>Cấu hình khuyên dùng:</strong><br> <span id="popup-recRequirements"></span></p>
+        <p><strong>Phiên bản:</strong> <span id="popup-version"></span></p>
+        <p><strong>Ghi chú:</strong> <span id="popup-notes"></span></p>
+        <p><strong>Update Note:</strong> <span id="popup-updateNote"></span></p>
+        <div id="popup-links"></div>
+    </div>
+</div>
+    <script src="script.js"></script>
+</body>
+</html>
