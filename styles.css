@@ -18,22 +18,6 @@ body::-webkit-scrollbar{
     color: white;
 }
 
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 45px 10px; /* Giảm khoảng cách để header không quá cao */
-    /* background-image: url('nendis.jpg'); */
-    background-size: auto;
-    color: white;
-    background-position: center;
-}
-
-.logo {
-    height: 150px; /* Đặt chiều cao cho logo */
-    width: auto;
-}
-
 h1 {
     margin: 0;
     text-align: center;
