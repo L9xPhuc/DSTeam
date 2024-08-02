@@ -10,11 +10,11 @@ body {
     background-attachment: fixed;
 }
 
-body::-webkit-scrollbar{
+body::-webkit-scrollbar {
     display: none;
 }
 
-.special-toggle p{
+.special-toggle p {
     color: white;
 }
 
@@ -154,11 +154,6 @@ input:checked + .slider:before {
     border-radius: 10px;
 }
 
-.game-item p {
-    margin-bottom: 10px;
-    line-height: 1.5;
-}
-
 .popup {
     display: none;
     position: fixed;
@@ -181,12 +176,12 @@ input:checked + .slider:before {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     position: relative;
     max-height: 90vh;
-    overflow-y: scroll;
+    overflow-y: auto; /* Cho phép cuộn nếu nội dung vượt quá chiều cao của popup */
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
 
-.popup-content::-webkit-scrollbar{
+.popup-content::-webkit-scrollbar {
     display: none;
 }
 
@@ -204,11 +199,15 @@ input:checked + .slider:before {
     cursor: pointer;
 }
 
-.popup-content a{
+.popup-content a {
     color: #4CAF50;
     text-decoration: none;
 }
 
-.popup h2{
+.popup h2 {
     text-align: center;
+}
+
+#popup-updates {
+    margin-top: 20px;
 }
