@@ -1,6 +1,7 @@
-const sheetId = '1fYEr6uG1YSi3zNnfacF5pguLjQ1KNiRbTXuFACKgN_o';
+const sheetId = '1KAxcw2K-_PIKqPa6FPrD6a9sQ65VqAX0t9QSGCaGizQ';
+const gameDataRange = 'GameData!A:N';  // Phạm vi dữ liệu game
+const updateDataRange = 'UpdateData!A:C';  // Phạm vi dữ liệu bản cập nhật
 const apiKey = 'AIzaSyAq7sEvz245Qdp-ED_H64nniECdJV7sNFg';
-const range = 'Sheet1!A:Z';  // Điều chỉnh phạm vi tùy theo file của bạn
 
 let allGames = [];
 let specialGames = [];
@@ -13,7 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function fetchData() {
-    fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`)
+    // Fetch game data
+    fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${gameDataRange}?key=${apiKey}`)
         .then(response => response.json())
         .then(data => {
             const rows = data.values;
@@ -30,7 +32,9 @@ function fetchData() {
                     notes: row[5],
                     vietnamese: row[6] && row[6].toLowerCase() === 'có',
                     updateNote: row[7],
-                    links: [row[8], row[9], row[10], row[11], row[12]],
+                    vietnameseLink: row[8],
+                    updateFlag: row[9] && row[9].toLowerCase() === 'có' ? 'UpdateData' : null,
+                    links: [row[10], row[11], row[12], row[13], row[14]]
                 };
                 allGames.push(game);
                 if (game.vietnamese) {
@@ -39,19 +43,31 @@ function fetchData() {
             });
             filterGames();
         })
-        .catch(error => console.error('Error fetching data: ', error));
+        .catch(error => console.error('Error fetching game data: ', error));
 }
 
-function displayGames() {
-    const gameList = document.getElementById('game-list');
-    gameList.innerHTML = '';
-    filteredGames.forEach(game => {
-        let html = `<div class="game-item" onclick='showPopup(${JSON.stringify(game).replace(/'/g, "\\'").replace(/"/g, "&quot;")})'>
-                        <h2>${game.title}</h2>
-                        <img src="${game.image}" alt="${game.title}" class="game-image"/>
-                    </div>`;
-        gameList.innerHTML += html;
-    });
+function fetchUpdates(game) {
+    if (game.updateFlag) {
+        fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${updateDataRange}?key=${apiKey}`)
+            .then(response => response.json())
+            .then(data => {
+                const rows = data.values;
+                game.updates = [];
+                rows.forEach((row, index) => {
+                    if (index === 0) return;  // Bỏ qua hàng tiêu đề
+                    if (row[0] === game.title) {  // So sánh tên game để lấy đúng bản cập nhật
+                        game.updates.push({
+                            title: row[1],
+                            link: row[2] || ''
+                        });
+                    }
+                });
+                showPopup(game);
+            })
+            .catch(error => console.error('Error fetching update data: ', error));
+    } else {
+        showPopup(game);  // Nếu không có thông tin bản cập nhật
+    }
 }
 
 function showPopup(game) {
@@ -65,25 +81,29 @@ function showPopup(game) {
 
     const popupLinks = document.getElementById('popup-links');
     popupLinks.innerHTML = '';  // Clear existing content
-    // const linkLabel = ['Việt hóa','Part 1','Part 2','Part 3','Part 4'];
+    if (game.vietnameseLink) {
+        popupLinks.innerHTML += `<p>Việt hóa: <a href="${game.vietnameseLink}" target="_blank">Tải về</a></p>`;
+    }
     game.links.forEach((link, index) => {
         if (link) {
-            let linkLabel = index === 0 ? "Việt hóa" : `Part ${index + 0}`; // Phần thứ tự bắt đầu từ 1
+            let linkLabel = index === 0 ? "Part 1" : `Part ${index + 1}`; // Phần thứ tự bắt đầu từ 0
             popupLinks.innerHTML += `<p>${linkLabel}: <a href="${link}" target="_blank">Tải về</a></p>`;
         }
     });
 
-    document.getElementById('popup').style.display = 'flex';
-}
-
-document.getElementById('close-popup').addEventListener('click', () => {
-    document.getElementById('popup').style.display = 'none'; // Sửa lỗi tên phần tử
-});
-
-function closePopup(event) {
-    if (event.target.id === 'popup' || event.target.id === 'close-popup') {
-        document.getElementById('popup').style.display = 'none';
+    // Hiển thị các bản cập nhật
+    const popupUpdates = document.getElementById('popup-updates');
+    popupUpdates.innerHTML = ''; // Clear existing content
+    if (game.updates && game.updates.length > 0) {
+        popupUpdates.innerHTML = '<h3>Các bản cập nhật:</h3>';
+        game.updates.forEach(update => {
+            popupUpdates.innerHTML += `<p>${update.title}: <a href="${update.link}" target="_blank">Tải về</a></p>`;
+        });
+    } else {
+        popupUpdates.innerHTML = '<p>Không có bản cập nhật.</p>';
     }
+
+    document.getElementById('popup').style.display = 'flex';
 }
 
 function formatTextWithNewLines(text) {
@@ -97,6 +117,18 @@ function filterGames() {
         return matchesSearch && matchesSpecial;
     });
     displayGames();
+}
+
+function displayGames() {
+    const gameList = document.getElementById('game-list');
+    gameList.innerHTML = '';
+    filteredGames.forEach(game => {
+        let html = `<div class="game-item" onclick='fetchUpdates(${JSON.stringify(game).replace(/'/g, "\\'").replace(/"/g, "&quot;")})'>
+                        <h2>${game.title}</h2>
+                        <img src="${game.image}" alt="${game.title}" class="game-image"/>
+                    </div>`;
+        gameList.innerHTML += html;
+    });
 }
 
 document.getElementById('toggle-special').addEventListener('change', (event) => {
@@ -115,3 +147,9 @@ document.getElementById('search-box').addEventListener('keydown', (event) => {
         filterGames();
     }
 });
+
+function closePopup(event) {
+    if (event.target.id === 'popup' || event.target.id === 'close-popup') {
+        document.getElementById('popup').style.display = 'none';
+    }
+}
