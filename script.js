@@ -1,6 +1,6 @@
 const sheetId = '1KAxcw2K-_PIKqPa6FPrD6a9sQ65VqAX0t9QSGCaGizQ';
 const gameDataRange = 'GameData!A:N';  // Phạm vi dữ liệu game
-const updateDataRange = 'UpdateData!A:C';  // Phạm vi dữ liệu bản cập nhật
+const updateDataRange = 'UpdateData!A:Z';  // Phạm vi dữ liệu bản cập nhật
 const apiKey = 'AIzaSyAq7sEvz245Qdp-ED_H64nniECdJV7sNFg';
 
 let allGames = [];
