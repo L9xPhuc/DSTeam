@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div id="overlay" class="overlay"></div>
     <div class="search-container">
         <input type="text" id="search-box" placeholder="Tìm kiếm game...">
         <button id="search-button">Tìm kiếm</button>
@@ -36,6 +37,21 @@
         <div id="popup-updates"></div> <!-- Thêm phần hiển thị bản cập nhật-->
     </div>
 </div>
+
+<!-- Popup lưu ý -->
+ <div id="note-popup" class="note-popup">
+    <div class="note-popup-content">
+        <h2>Lưu ý</h2>
+        <p>Vui lòng đọc kỹ các lưu ý trước khi sử dụng trang web.</p>
+        <ul>
+            <li>Mật khẩu giải nén cho tất cả các file: linkneverdie.com</li>
+            <li>Vui lòng kiểm tra các yêu cầu hệ thống trước khi tải về.</li>
+            <li>Nếu game có nhiều file hãy tải tất cả các file và giải nén bằng part 1.</li>
+            <li>Die link? Hãy liên hệ với người giới thiệu cho bạn.</li>
+        </ul>
+        <button id="close-note" class="close-button">Đóng</button>
+    </div>
+ </div>
     <script src="script.js"></script>
 </body>
 </html>
