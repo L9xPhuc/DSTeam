@@ -1,5 +1,5 @@
 const sheetId = '1KAxcw2K-_PIKqPa6FPrD6a9sQ65VqAX0t9QSGCaGizQ';
-const gameDataRange = 'GameData!A:N';  // Phạm vi dữ liệu game
+const gameDataRange = 'GameData!A:Z';  // Phạm vi dữ liệu game
 const updateDataRange = 'UpdateData!A:Z';  // Phạm vi dữ liệu bản cập nhật
 const apiKey = 'AIzaSyAq7sEvz245Qdp-ED_H64nniECdJV7sNFg';
 
@@ -86,7 +86,7 @@ function showPopup(game) {
     }
     game.links.forEach((link, index) => {
         if (link) {
-            let linkLabel = index === 0 ? "Part 1" : `Part ${index + 1}`; // Phần thứ tự bắt đầu từ 0
+            let linkLabel = index === 0 ? "Part 1" : `Part ${index + 1}`; // Phần thứ tự bắt đầu từ 1
             popupLinks.innerHTML += `<p>${linkLabel}: <a href="${link}" target="_blank">Tải về</a></p>`;
         }
     });
@@ -153,3 +153,17 @@ function closePopup(event) {
         document.getElementById('popup').style.display = 'none';
     }
 }
+
+// Hiển thị popup lưu ý và overlay khi tải trang
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('note-popup').classList.add('show');
+    document.getElementById('overlay').classList.add('show');
+    document.body.classList.add('no-scroll');
+});
+
+// Đóng popup lưu ý và overlay khi nhấn nút đóng
+document.getElementById('close-note').addEventListener('click', () => {
+    document.getElementById('note-popup').classList.remove('show');
+    document.getElementById('overlay').classList.remove('show');
+    document.body.classList.remove('no-scroll');
+});
