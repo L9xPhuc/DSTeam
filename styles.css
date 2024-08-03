@@ -264,6 +264,10 @@ input:checked + .slider:before {
     list-style-type: disc;
 }
 
+.note-popup h2{
+    color: red;
+}
+
 .overlay{
     position: fixed;
     top: 0;
