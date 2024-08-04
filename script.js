@@ -154,6 +154,8 @@ function closePopup(event) {
     }
 }
 
+document.getElementById('close-popup').addEventListener('click', closePopup);
+
 // Hiển thị popup lưu ý và overlay khi tải trang
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('note-popup').classList.add('show');
