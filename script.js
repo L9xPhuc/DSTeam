@@ -34,7 +34,7 @@ function fetchData() {
                     updateNote: row[7],
                     vietnameseLink: row[8],
                     updateFlag: row[9] && row[9].toLowerCase() === 'có' ? 'UpdateData' : null,
-                    links: [row[10], row[11], row[12], row[13], row[14], row[15], row[16], row[17], row[18], rowp[19], row[20]]
+                    links: [row[10], row[11], row[12], row[13], row[14], row[15], row[16], row[17], row[18], row[19], row[20]]
                 };
                 allGames.push(game);
                 if (game.vietnamese) {
