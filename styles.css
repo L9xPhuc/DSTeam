@@ -122,7 +122,6 @@ input:checked + .slider:before {
 }
 
 .game-item:hover {
-    cursor: pointer;
     transform: scale(1.05);
 }
 
@@ -291,4 +290,24 @@ input:checked + .slider:before {
 
 .no-scroll{
     overflow: hidden;
+}
+
+.change-link-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.change-link-button:hover {
+    background-color: #45a049;
+}
+
+.link-status {
+    margin-left: 10px;
+    font-size: 0.9em;
+    color: #333;
 }
